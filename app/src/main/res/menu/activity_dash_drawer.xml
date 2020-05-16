@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="@string/menu_home" />
+        <item
+            android:id="@+id/nav_cart"
+            android:icon="@drawable/ic_shopping_cart"
+            android:title="My Cart"/>
+        <item
+            android:id="@+id/nav_wish"
+            android:icon="@drawable/ic_wishlist"
+            android:title="My Wish List"/>
+
+        <item
+            android:id="@+id/nav_orders"
+            android:icon="@drawable/ic_box"
+            android:title="Your Orders" />
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_account_box_black_24dp"
+            android:title="Profile" />
+        <item
+            android:id="@+id/nav_setting"
+            android:icon="@drawable/ic_exit"
+            android:title="Sign Out" />
+
+    </group>
+
+    <item android:title="Contact Us">
+        <menu>
+            <item
+                android:id="@+id/nav_call"
+                android:icon="@drawable/ic_call"
+                android:title="Call - 1" />
+            <item
+                android:id="@+id/nav_call2"
+                android:icon="@drawable/ic_call"
+                android:title="Call - 2" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_whatsapp"
+                android:title="Whatsapp - 1" />
+            <item
+                android:id="@+id/nav_send2"
+                android:icon="@drawable/ic_whatsapp"
+                android:title="Whatsapp - 2" />
+
+        </menu>
+    </item>
+
+</menu>

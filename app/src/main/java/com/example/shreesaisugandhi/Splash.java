@@ -5,8 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class Splash extends AppCompatActivity {
 
+    FirebaseAuth firebaseAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,9 +26,18 @@ public class Splash extends AppCompatActivity {
                 catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                Intent i = new Intent(Splash.this,MainActivity.class);
-                startActivity(i);
-                finish();
+
+                firebaseAuth = FirebaseAuth.getInstance();
+                if(firebaseAuth.getCurrentUser() == null ) {
+                    Intent i = new Intent(Splash.this, MainActivity.class);
+                    startActivity(i);
+                    finish();
+                }
+                else {
+                    Intent i = new Intent(Splash.this, Dash.class);
+                    startActivity(i);
+                    finish();
+                }
             }
         }).start();
     }

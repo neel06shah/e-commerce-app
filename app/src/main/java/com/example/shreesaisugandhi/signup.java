@@ -31,6 +31,7 @@ import java.util.jar.Attributes;
 
 public class signup extends AppCompatActivity {
 
+    HorizontalDottedProgress loading;
     EditText etName, number, address,otp;
     Button register,btnOTP;
     FirebaseAuth firebaseAuth;
@@ -46,6 +47,9 @@ public class signup extends AppCompatActivity {
         address = findViewById(R.id.address);
         number=findViewById(R.id.number);
         otp=findViewById(R.id.tvOTP);
+        loading = findViewById(R.id.loading);
+
+        loading.setVisibility(View.GONE);
 
         btnOTP=findViewById(R.id.otp);
         register=findViewById(R.id.register);
@@ -56,6 +60,7 @@ public class signup extends AppCompatActivity {
         btnOTP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(signup.this, "You will be receiving an OTP soon.\nPlease wait", Toast.LENGTH_SHORT).show();
                 sendCode();
             }
         });
@@ -63,6 +68,7 @@ public class signup extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                loading.setVisibility(View.VISIBLE);
                 verifyCode();
             }
         });

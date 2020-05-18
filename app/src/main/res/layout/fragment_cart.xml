@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/gradient_background">
+    android:background="#e1f5fe">
 
     <Button
         android:id="@+id/btnBuy"
@@ -12,15 +12,17 @@
         android:layout_height="wrap_content"
         android:text="Buy Now"
         android:textSize="24sp"
-        style="@style/AppTheme.RoundedCornerMaterialButton"/>
+        android:textAllCaps="false"
+        android:textColor="#fff"
+        android:backgroundTint="@android:color/holo_blue_dark"/>
 
     <TextView
         android:id="@+id/tvTotal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:text="Total Amount : \u20b9 0 "
         android:textSize="22sp"
-        android:textColor="#fff"
+        android:textColor="#000"
         android:gravity="center"/>
 
     <androidx.recyclerview.widget.RecyclerView

@@ -6,24 +6,12 @@
     android:orientation="vertical"
     android:background="#fff">
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:background="@color/colorPrimary">
-
-        <EditText
-            android:id="@+id/etSearch"
+    <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchView"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:inputType="textPersonName"
-            android:hint="Search"
-            android:drawableLeft="@drawable/ic_search_black_24dp"
-            android:layout_margin="7dp"
-            android:background="@drawable/small"
-            android:paddingLeft="5dp"/>
-    </LinearLayout>
+            android:layout_height="?attr/actionBarSize"
+            android:padding="10dp"
+            app:queryHint="Search"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listView"

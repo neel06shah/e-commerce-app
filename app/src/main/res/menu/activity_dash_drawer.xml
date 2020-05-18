@@ -11,11 +11,11 @@
         <item
             android:id="@+id/nav_cart"
             android:icon="@drawable/ic_shopping_cart"
-            android:title="My Cart"/>
+            android:title="Your Cart"/>
         <item
             android:id="@+id/nav_wish"
             android:icon="@drawable/ic_wishlist"
-            android:title="My Wish List"/>
+            android:title="Your Wish List"/>
 
         <item
             android:id="@+id/nav_orders"
@@ -24,7 +24,7 @@
         <item
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_account_box_black_24dp"
-            android:title="Profile" />
+            android:title="Your Profile" />
         <item
             android:id="@+id/nav_setting"
             android:icon="@drawable/ic_exit"
@@ -37,21 +37,37 @@
             <item
                 android:id="@+id/nav_call"
                 android:icon="@drawable/ic_call"
-                android:title="Call - 1" />
+                android:title="Call - Mr. Deep" />
             <item
                 android:id="@+id/nav_call2"
                 android:icon="@drawable/ic_call"
-                android:title="Call - 2" />
+                android:title="Call - Mr. Mahesh" />
             <item
                 android:id="@+id/nav_send"
                 android:icon="@drawable/ic_whatsapp"
-                android:title="Whatsapp - 1" />
+                android:title="Whatsapp - Mr. Deep" />
             <item
                 android:id="@+id/nav_send2"
                 android:icon="@drawable/ic_whatsapp"
-                android:title="Whatsapp - 2" />
+                android:title="Whatsapp - Mr. Mahesh" />
 
         </menu>
     </item>
+
+    <item android:title="About Developer">
+        <menu>
+            <item
+                android:id="@+id/nav_about"
+                android:icon="@drawable/ic_info_outline_black_24dp"
+                android:title="About Us" />
+
+            <item
+                android:id="@+id/nav_help"
+                android:icon="@drawable/ic_feedback_black_24dp"
+                android:title="Feedback and support" />
+
+        </menu>
+    </item>
+
 
 </menu>

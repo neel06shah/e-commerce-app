@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -164,6 +163,11 @@ public class ProductsFragment extends Fragment {
             Discount=discount;
             TextView tvR = mView.findViewById(R.id.textViewDiscount);
             tvR.setText("You Save \u20B9"+(m-r)+" ("+discount+"%)");
+
+            double d = Double.parseDouble(discount);
+            int s = (int) d;
+            TextView dis = mView.findViewById(R.id.tvDiscount);
+            dis.setText(s+"%\noff");
         }
     }
 }

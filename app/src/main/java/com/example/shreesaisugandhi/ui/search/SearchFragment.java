@@ -1,70 +1,46 @@
 package com.example.shreesaisugandhi.ui.search;
 
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.shreesaisugandhi.AdapterClass;
 import com.example.shreesaisugandhi.R;
-import com.example.shreesaisugandhi.cartProduct;
 import com.example.shreesaisugandhi.products;
-import com.example.shreesaisugandhi.ui.product.ProductsFragment;
-import com.example.shreesaisugandhi.ui.productDetails.ProductDetails;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.squareup.picasso.Picasso;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 public class SearchFragment extends Fragment {
 
+    private RecyclerView list_view;
+    private DatabaseReference myRef;
+    androidx.appcompat.widget.SearchView searchView;
+    ArrayList<products> list;
     public SearchFragment() {
     }
 
-    EditText etSearch;
-    private RecyclerView list_view;
-    private Query ref1, myRef;
-    private Query reference;
-    private FirebaseAuth firebaseAuth;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 
-        etSearch = view.findViewById(R.id.etSearch);
-        etSearch.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                reference = FirebaseDatabase.getInstance().getReference().child("Products");
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String sea = etSearch.getText().toString();
-                reference.orderByChild("name").equalTo(sea);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
+        myRef=FirebaseDatabase.getInstance().getReference().child("Products");
 
         list_view = view.findViewById(R.id.listView);
+        searchView = view.findViewById(R.id.searchView);
         list_view.setHasFixedSize(true);
         list_view.setLayoutManager(new LinearLayoutManager(getActivity()));
         return view;
@@ -73,111 +49,50 @@ public class SearchFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        FirebaseRecyclerAdapter<products, productsViewHolder> firebaseRecyclerAdapter= new FirebaseRecyclerAdapter <products, productsViewHolder>
-                (products.class,R.layout.product_item, productsViewHolder.class,reference)
-        {
-            @Override
-            protected void populateViewHolder(productsViewHolder productsViewHolder, products products, int i) {
-                productsViewHolder.setName(products.getName());
-                productsViewHolder.setQuantity(products.getQuantity());
-                productsViewHolder.setMrp(products.getMrp());
-                productsViewHolder.setRate(products.getRate());
-                productsViewHolder.setDiscount(products.getDiscount());
-                productsViewHolder.setDescription(products.getDescription());
-                productsViewHolder.setImage(products.getImage());
-            }
-        };
-        list_view.setAdapter(firebaseRecyclerAdapter);
+        if(myRef != null){
+            myRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.exists()) {
+                        list = new ArrayList<>();
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                           list.add(ds.getValue(products.class));
+                        }
+                        AdapterClass adapterClass = new AdapterClass(list);
+                        list_view.setAdapter(adapterClass);
+                    }
+                    if(searchView != null){
+                        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                            @Override
+                            public boolean onQueryTextSubmit(String query) {
+                                return false;
+                            }
+
+                            @Override
+                            public boolean onQueryTextChange(String newText) {
+                                search(newText);
+                                return true;
+                            }
+                        });
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Toast.makeText(getContext(), databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
-    public static class productsViewHolder extends RecyclerView.ViewHolder {
-        View mView;
-        String title,desc,Mrp,Rate,Discount,Image,quan;
-        int m,r;
-        DatabaseReference firebaseDatabase;
-        FirebaseAuth firebaseAuth;
-        String current;
-        Button cart;
-
-        public productsViewHolder(final View itemView) {
-            super(itemView);
-            mView=itemView;
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    AppCompatActivity activity = (AppCompatActivity) v.getContext();
-                    Fragment myFragment = new ProductDetails();
-
-                    int save = m-r;
-                    String s = String.valueOf(save);
-
-                    Bundle arguments = new Bundle();
-                    arguments.putString("title", title);
-                    arguments.putString("description", desc);
-                    arguments.putString("mrp", Mrp);
-                    arguments.putString("rate", Rate);
-                    arguments.putString("discount", Discount);
-                    arguments.putString("image", Image);
-                    arguments.putString("quantity", quan);
-                    arguments.putString("save",s);
-
-                    myFragment.setArguments(arguments);
-                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, myFragment).addToBackStack(null).commit();
-                }
-            });
-
-            cart = mView.findViewById(R.id.btnAddCart);
-            firebaseDatabase = FirebaseDatabase.getInstance().getReference();
-            firebaseAuth =FirebaseAuth.getInstance();
-            current = firebaseAuth.getCurrentUser().getPhoneNumber();
-
-
-            cart.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    cartProduct products = new cartProduct(title,desc,quan,Image,Mrp,Rate,Discount,"1");
-                    firebaseDatabase.child("Cart").child(current).child(title).setValue(products);
-                    Toast.makeText(itemView.getContext(), "Product Added to Cart", Toast.LENGTH_SHORT).show();
-                }
-            });
+    private void search(String s) {
+        ArrayList<products> myList = new ArrayList();
+        for (products object : list) {
+            if(object.getName().toLowerCase().contains(s.toLowerCase())) {
+                myList.add(object);
+            }
         }
-
-        public void setImage(String image) {
-            Image=image;
-            ImageView imageView = mView.findViewById(R.id.imageView);
-            Picasso.get().load(image).fit().into(imageView);
-        }
-
-        public void setName(String name) {
-            title=name;
-            TextView tvPrintTitle = mView.findViewById(R.id.textViewTitle);
-            tvPrintTitle.setText(name);
-        }
-        public void setDescription(String description) {
-            desc = description;
-        }
-        public void setQuantity(String quantity) {
-            quan=quantity;
-            TextView tvSd = mView.findViewById(R.id.textViewShortDesc);
-            tvSd.setText(quantity);
-        }
-        public void setMrp(String mrp) {
-            Mrp=mrp;
-            m=Integer.parseInt(mrp);
-            TextView tvM = mView.findViewById(R.id.textViewMRP);
-            tvM.setText("\u20B9 "+mrp);
-        }
-        public void setRate(String rate) {
-            Rate=rate;
-            r=Integer.parseInt(rate);
-            TextView tvR = mView.findViewById(R.id.textViewPrice);
-            tvR.setText("\u20B9 "+rate);
-        }
-        public void setDiscount(String discount) {
-            Discount=discount;
-            TextView tvR = mView.findViewById(R.id.textViewDiscount);
-            tvR.setText("You Save \u20B9"+(m-r)+" ("+discount+"%)");
-        }
+        AdapterClass adapterClass = new AdapterClass(myList);
+        list_view.setAdapter(adapterClass);
     }
 }

@@ -51,7 +51,8 @@ public class ProductDetails extends Fragment {
             discount=bundle.getString("discount");
             save=bundle.getString("save");
         }
-        double disc = Double.parseDouble(discount);
+
+        double disc = Double.parseDouble(discount.trim());
         int dis = (int) disc;
 
         tvTile=view.findViewById(R.id.tvTitle);
@@ -119,7 +120,7 @@ public class ProductDetails extends Fragment {
             @Override
             public void onClick(View v) {
                 products products = new products(title,description,quantity,image,mrp,rate,discount);
-                databaseReferences.child("Wishlist").child(current).push().setValue(products);
+                databaseReferences.child("Wishlist").child(current).child(title).setValue(products);
                 Toast.makeText(view.getContext(), "Product Added to WishList", Toast.LENGTH_SHORT).show();
             }
         });

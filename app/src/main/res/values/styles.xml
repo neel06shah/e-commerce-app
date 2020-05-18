@@ -31,7 +31,7 @@
         <item name="android:background">@drawable/round_shaped2</item>
         <item name="colorButtonNormal">@color/colorPrimaryDark</item>
         <item name="colorControlHighlight">@color/colorPrimary</item>
-        <item name="android:textColor">#fff</item>
+        <item name="android:textColor">#000</item>
         <item name="android:paddingLeft">20dp</item>
         <item name="android:paddingRight">20dp</item>
     </style>
@@ -48,5 +48,10 @@
     </style>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="TextAppearance.AppCompat.Widget.ActionBar.Title"
+        parent="@style/AppTheme.PopupOverlay">
+        <item name="android:textColor">#000</item>
+    </style>
 
 </resources>

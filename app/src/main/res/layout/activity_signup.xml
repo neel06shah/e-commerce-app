@@ -18,7 +18,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="20dp"
-            android:gravity="center"
             android:theme="@style/AppTheme"
             android:orientation="vertical">
 
@@ -31,48 +30,54 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="70dp"
                 android:gravity="center"
-                android:shadowColor="#7F000000"
+                android:shadowColor="#000"
                 android:shadowDx="3"
                 android:shadowDy="3"
                 android:shadowRadius="5"
                 android:text="Register"
-                android:textColor="#fff"
+                android:textColor="#03a9f4"
                 android:textSize="45sp"
-                android:typeface="serif"/>
+                android:typeface="serif" />
 
             <EditText
                 android:id="@+id/name"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:hint="Enter Name"
                 android:layout_marginTop="20dp"
-                android:textColorHint="#fff"
                 android:drawableLeft="@drawable/ic_account_circle_black_24dp"
-               android:textColor="#fff"
-                android:inputType="textPersonName"/>
+                android:inputType="textPersonName"
+                android:textColorHint="#000"
+                android:textColor="#000"
+                android:padding="10dp"
+                android:background="@drawable/round_shaped"/>
 
             <EditText
                 android:id="@+id/address"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:layout_marginTop="20dp"
+                android:background="@drawable/round_shaped"
                 android:drawableLeft="@drawable/ic_home_address"
                 android:hint="Enter Address"
                 android:inputType="textMultiLine"
-                android:textColor="@color/colorAccent"
-                android:textColorHint="#fff" />
+                android:padding="10dp"
+                android:textColor="#000"
+                android:textColorHint="#000" />
 
             <EditText
                 android:id="@+id/number"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_marginTop="20dp"
                 android:drawableLeft="@drawable/ic_call_black_24dp"
                 android:hint="Mobile Number"
                 android:inputType="number"
                 android:ems="10"
-                android:textColor="@color/colorAccent"
-                android:textColorHint="#fff" />
+                android:textColorHint="#000"
+                android:textColor="#000"
+                android:padding="10dp"
+                android:background="@drawable/round_shaped"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -84,23 +89,27 @@
                 <Button
                     android:id="@+id/otp"
                     style="@style/AppTheme.newRoundedCornerMaterialButton"
-                    android:layout_width="match_parent"
+                    android:layout_width="150dp"
                     android:layout_height="35dp"
                     android:text="Get OTP"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"
+                    android:backgroundTint="#4b0082"
+                    android:textColor="#fff" />
 
             </LinearLayout>
 
             <EditText
                 android:id="@+id/tvOTP"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:hint="Enter OTP"
                 android:layout_marginTop="20dp"
-                android:textColorHint="#fff"
+                android:textColorHint="#000"
                 android:inputType="number"
                 android:drawableLeft="@drawable/ic_keyboard_black_24dp"
-                android:textColor="#fff"/>
+                android:textColor="#000"
+                android:padding="10dp"
+                android:background="@drawable/round_shaped"/>
 
 
             <LinearLayout
@@ -112,13 +121,22 @@
 
                 <Button
                     android:id="@+id/register"
-                    style="@style/AppTheme.newRoundedCornerMaterialButton"
-                    android:layout_width="match_parent"
+                    style="@style/AppTheme.RoundedCornerMaterialButton"
+                    android:layout_width="150dp"
                     android:layout_height="35dp"
                     android:text="Register"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"
+                    android:backgroundTint="#4b0082"
+                    android:textColor="#fff"
+                    />
             </LinearLayout>
 
+
+            <com.example.shreesaisugandhi.HorizontalDottedProgress
+                android:id="@+id/loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"/>
 
         </LinearLayout>
 

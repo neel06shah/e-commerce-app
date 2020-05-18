@@ -34,13 +34,13 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:shadowColor="#7F000000"
+                android:shadowColor="#fff"
                 android:shadowDx="3"
                 android:shadowDy="3"
-                android:shadowRadius="5"
-                android:text="Shree Sai Sugandhi"
-                android:textColor="#fff"
-                android:textSize="30sp"
+                android:shadowRadius="3"
+                android:text="Shree Sai\n     Sugandhi"
+                android:textColor="#4b0082"
+                android:textSize="40sp"
                 android:textStyle="bold"
                 app:fontFamily="serif" />
 
@@ -48,28 +48,31 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="35dp"
                 android:layout_marginBottom="20dp"
-                android:text="Make yourself divine"
-                android:textColor="#000"
-                android:shadowColor="#ffffff"
+                android:shadowColor="#fff"
                 android:shadowDx="3"
                 android:shadowDy="3"
                 android:shadowRadius="5"
+                android:text="Make yourself divine"
+                android:textColor="#01579b"
                 android:textSize="24sp"
+                android:textStyle="bold"
                 app:fontFamily="serif" />
 
 
             <EditText
                 android:id="@+id/number"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="35dp"
                 android:layout_marginTop="20dp"
                 android:drawableLeft="@drawable/ic_call_black_24dp"
                 android:hint="Enter Mobile Number"
                 android:inputType="number"
                 android:textColor="@color/colorAccent"
-                android:textColorHint="#fff" />
+                android:textColorHint="#000"
+                android:paddingLeft="10dp"
+                android:background="@drawable/round_shaped"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -80,10 +83,12 @@
 
                 <Button
                     android:id="@+id/otp"
-                    style="@style/AppTheme.newRoundedCornerMaterialButton"
-                    android:layout_width="150dp"
-                    android:layout_height="35dp"
+                    style="@style/AppTheme.RoundedCornerMaterialButton"
+                    android:layout_width="125dp"
+                    android:layout_height="40dp"
+                    android:backgroundTint="#4b0082"
                     android:text="Get OTP"
+                    android:textColor="#fff"
                     android:textSize="15sp" />
 
             </LinearLayout>
@@ -91,13 +96,15 @@
             <EditText
                 android:id="@+id/tvOTP"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Enter OTP"
+                android:layout_height="35dp"
                 android:layout_marginTop="20dp"
-                android:textColorHint="#fff"
-                android:inputType="number"
                 android:drawableLeft="@drawable/ic_keyboard_black_24dp"
-                android:textColor="#fff"/>
+                android:hint="Enter OTP"
+                android:inputType="number"
+                android:textColor="#000"
+                android:textColorHint="#000"
+                android:paddingLeft="10dp"
+                android:background="@drawable/round_shaped"/>
 
 
             <LinearLayout
@@ -109,25 +116,38 @@
 
                 <Button
                     android:id="@+id/login"
-                    style="@style/AppTheme.newRoundedCornerMaterialButton"
-                    android:layout_width="150dp"
-                    android:layout_height="35dp"
+                    style="@style/AppTheme.RoundedCornerMaterialButton"
+                    android:layout_width="125dp"
+                    android:layout_height="40dp"
+                    android:backgroundTint="#4b0082"
                     android:text="Login"
+                    android:textColor="#fff"
                     android:textSize="15sp" />
 
 
                 <Button
                     android:id="@+id/register"
-                    style="@style/AppTheme.newRoundedCornerMaterialButton"
-                    android:layout_width="150dp"
-                    android:layout_height="35dp"
+                    style="@style/AppTheme.RoundedCornerMaterialButton"
+                    android:layout_width="125dp"
+                    android:layout_height="40dp"
                     android:layout_marginLeft="20dp"
+                    android:backgroundTint="#4b0082"
                     android:text="Register"
+                    android:textColor="#fff"
                     android:textSize="15sp" />
 
             </LinearLayout>
 
+            <com.example.shreesaisugandhi.HorizontalDottedProgress
+                android:id="@+id/loading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:visibility="gone"/>
+
         </LinearLayout>
+
 
     </ScrollView>
 

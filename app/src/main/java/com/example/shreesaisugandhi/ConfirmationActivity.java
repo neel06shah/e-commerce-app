@@ -23,7 +23,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class ConfirmationActivity extends AppCompatActivity {
@@ -126,12 +129,17 @@ public class ConfirmationActivity extends AppCompatActivity {
                 from=FirebaseDatabase.getInstance().getReference().child("Cart").child(number);
                 to=FirebaseDatabase.getInstance().getReference().child("Order").child(id);
 
+                Date c = Calendar.getInstance().getTime();
+                SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
+                String formattedDate = df.format(c);
+
                 to.child("id").setValue(id);
                 to.child("name").setValue(name);
                 to.child("address").setValue(a);
                 to.child("contact").setValue(number);
                 to.child("payment").setValue(payment);
                 to.child("total").setValue(total);
+                to.child("date").setValue(formattedDate);
                 to.child("state").setValue("Waiting for conformation");
 
 

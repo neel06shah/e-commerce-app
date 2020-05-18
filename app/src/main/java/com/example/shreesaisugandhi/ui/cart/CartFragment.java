@@ -20,12 +20,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shreesaisugandhi.ConfirmationActivity;
-import com.example.shreesaisugandhi.ForgotActivity;
 import com.example.shreesaisugandhi.R;
 import com.example.shreesaisugandhi.cartProduct;
-import com.example.shreesaisugandhi.products;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.firebase.FirebaseError;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -56,7 +53,7 @@ public class CartFragment extends Fragment {
         String current = firebaseAuth.getCurrentUser().getPhoneNumber();
         tvTotal=view.findViewById(R.id.tvTotal);
 
-        reference= FirebaseDatabase.getInstance().getReference().child("Cart").child("+919323610419");
+        reference= FirebaseDatabase.getInstance().getReference().child("Cart").child(current);
         reference.keepSynced(true);
 
         list_view=view.findViewById(R.id.listView);
@@ -102,7 +99,7 @@ public class CartFragment extends Fragment {
                 int oneTyprProductTPrice = (int) (price*q);
 
                 finalAmount = finalAmount + oneTyprProductTPrice;
-                tvTotal.setText("Final Amount : "+finalAmount);
+                tvTotal.setText("Final Amount : \u20b9"+finalAmount);
             }
         };
         list_view.setAdapter(firebaseRecyclerAdapter);
@@ -221,6 +218,11 @@ public class CartFragment extends Fragment {
             Discount=discount;
             TextView tvR = mView.findViewById(R.id.textViewDiscount);
             tvR.setText("You Save \u20B9"+(m-r)+" ("+discount+"%)");
+
+            double d = Double.parseDouble(discount);
+            int s = (int) d;
+            TextView dis = mView.findViewById(R.id.tvDiscount);
+            dis.setText(s+"%\noff");
         }
         public void setTotal(String total) {
             quantity.setText(total);

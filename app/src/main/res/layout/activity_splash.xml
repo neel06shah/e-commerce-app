@@ -4,7 +4,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:gravity="center_horizontal">
+    android:gravity="center_horizontal"
+    android:background="#e1f5fe">
 
     <TextView
         android:id="@+id/appname"
@@ -12,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
         android:gravity="left"
-        android:shadowColor="#7F000000"
+        android:shadowColor="#fff"
         android:shadowDx="3"
         android:shadowDy="3"
         android:shadowRadius="10"
@@ -23,28 +24,28 @@
         app:fontFamily="serif" />
 
 
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginTop="90dp"
+        android:src="@drawable/ic_namaste" />
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="90dp"
+        android:layout_marginTop="10dp"
         android:gravity="center"
-        android:text="Welcome"
-        android:shadowColor="#7F000000"
+        android:shadowColor="#fff"
         android:shadowDx="3"
         android:shadowDy="3"
         android:shadowRadius="10"
-        android:textColor="@color/colorPrimaryDark"
+        android:text="Welcome"
+        android:textColor="#4b0082"
         android:textSize="70sp"
         android:textStyle="bold"
         app:fontFamily="sans-serif-condensed-medium" />
-
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="match_parent"
-        android:layout_height="167dp"
-        android:layout_marginTop="20dp"
-        android:src="@drawable/ic_namaste" />
 
 </LinearLayout>
 

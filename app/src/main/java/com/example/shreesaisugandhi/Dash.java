@@ -3,24 +3,28 @@ package com.example.shreesaisugandhi;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import com.example.shreesaisugandhi.ui.cart.CartFragment;
 import com.example.shreesaisugandhi.ui.home.HomeFragment;
 import com.example.shreesaisugandhi.ui.orders.OrderFragment;
 import com.example.shreesaisugandhi.ui.profile.ProfileFragment;
 import com.example.shreesaisugandhi.ui.wish.WishList;
-
-import android.view.MenuItem;
-import android.view.View;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
-import androidx.core.view.GravityCompat;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -28,15 +32,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import androidx.drawerlayout.widget.DrawerLayout;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import android.view.Menu;
-import android.widget.TextView;
-import android.widget.Toast;
 
 public class Dash extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -127,8 +122,8 @@ public class Dash extends AppCompatActivity implements NavigationView.OnNavigati
                         new HomeFragment()).commit();
                 break;
             case R.id.nav_orders:
-                //getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,
-                        //new OrderFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,
+                        new OrderFragment()).commit();
                 break;
             case R.id.nav_profile:
                 getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,
@@ -136,6 +131,8 @@ public class Dash extends AppCompatActivity implements NavigationView.OnNavigati
                 break;
             case R.id.nav_setting:
                 Intent k = new Intent(Dash.this, MainActivity.class);
+                FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                firebaseAuth.signOut();
                 startActivity(k);
                 finish();
                 break;
@@ -172,6 +169,11 @@ public class Dash extends AppCompatActivity implements NavigationView.OnNavigati
                 getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,
                         new WishList()).commit();
                 break;
+
+            case R.id.nav_help :
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse("https://docs.google.com/forms/d/e/1FAIpQLScTT_Q3yhoNr4UFYCJ3SL7VzdG50nF_hoDC4WvOme-YIoqTkw/viewform?usp=sf"));
+                startActivity(i);
 
 
         }

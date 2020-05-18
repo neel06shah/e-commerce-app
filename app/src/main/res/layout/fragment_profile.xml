@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="#ffffff">
+    android:background="#e1f5fe">
 
 
     <TextView
@@ -50,7 +50,7 @@
             android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Edit Info"
+            android:text="Edit Details"
             android:background="@color/colorPrimaryDark"
             android:textColor="#fff"
             android:drawableRight="@drawable/arrow"/>

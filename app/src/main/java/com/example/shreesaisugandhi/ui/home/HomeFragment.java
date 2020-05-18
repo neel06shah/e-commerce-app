@@ -128,6 +128,7 @@ public class HomeFragment extends Fragment {
             tv=title;
             TextView Title = mView.findViewById(R.id.tvCategory);
             Title.setText(title);
+            Title.setAllCaps(true);
         }
         public void setDescription (String description) {
             TextView Title = mView.findViewById(R.id.tvDescription);

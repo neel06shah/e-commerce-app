@@ -1,5 +1,5 @@
 # e-Commerce app
-This app is using firebase database as its backend.  This app is mainly used to develop small businesses.  This app is developed for a small firm named 'SHREE SAI SUGANDHI'. They have used this app to sell their products using a online method .It includes products list according to their personalized categories.
+This app is using firebase database as its backend. This app is mainly used to develop small businesses. This app can be used by many small business to sell their products online. It includes products list according to their personalized categories.
 
 # Features
 1. Login using Phone number authentificaton

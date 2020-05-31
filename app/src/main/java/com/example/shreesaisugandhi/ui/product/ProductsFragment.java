@@ -12,9 +12,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.shreesaisugandhi.R;
 import com.example.shreesaisugandhi.cartProduct;
 import com.example.shreesaisugandhi.products;
@@ -24,7 +25,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-import com.squareup.picasso.Picasso;
 
 public class ProductsFragment extends Fragment {
 
@@ -50,8 +50,8 @@ public class ProductsFragment extends Fragment {
 
 
         list_view=view.findViewById(R.id.listView);
-        list_view.setHasFixedSize(true);
-        list_view.setLayoutManager(new LinearLayoutManager(getActivity()));
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2);
+        list_view.setLayoutManager(gridLayoutManager);
         return view;
     }
 
@@ -131,7 +131,7 @@ public class ProductsFragment extends Fragment {
         public void setImage(String image) {
             Image=image;
             ImageView imageView = mView.findViewById(R.id.imageView);
-            Picasso.get().load(image).fit().into(imageView);
+            Glide.with(mView.getContext()).load(image).into(imageView);
         }
 
         public void setName(String name) {

@@ -2,14 +2,11 @@ package com.example.shreesaisugandhi.ui.home;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
@@ -19,50 +16,62 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.shreesaisugandhi.R;
 import com.example.shreesaisugandhi.category;
 import com.example.shreesaisugandhi.ui.product.ProductsFragment;
-import com.example.shreesaisugandhi.ui.search.SearchFragment;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.squareup.picasso.Picasso;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 
 public class HomeFragment extends Fragment {
 
     public HomeFragment() { }
     ViewFlipper viewFlipper;
-    Button agarbatti;
     private RecyclerView list_view;
-    private DatabaseReference reference;
-    int gallery_grid_Images[] = {R.drawable.slide1,R.drawable.slide2,R.drawable.slide3,
-            R.drawable.slide4,R.drawable.slide5};
-    EditText etSearch;
-
+    private DatabaseReference reference, images;
+    String gallery_grid_Images[];
+    ArrayList<String> list;
+    LinearLayout linearLayout;
+    ProgressBar progressBar;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+
+        progressBar = view.findViewById(R.id.progressBar);
+        linearLayout = view.findViewById(R.id.linearLayout);
+
         viewFlipper=view.findViewById(R.id.viewFlipper);
+        images = FirebaseDatabase.getInstance().getReference().child("Slides");
+        images.keepSynced(true);
 
-        etSearch=view.findViewById(R.id.etSearch);
-        etSearch.setOnTouchListener(new View.OnTouchListener() {
+        images.addValueEventListener(new ValueEventListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                AppCompatActivity activity = (AppCompatActivity) v.getContext();
-                Fragment myFragment = new SearchFragment();
-                activity.getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, myFragment).addToBackStack(null).commit();
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                list = new ArrayList<>();
+                for(DataSnapshot child : dataSnapshot.getChildren()){
+                    list.add(child.getValue(String.class));
+                }
+                for (int i =0; i < list.size(); i++) {
+                    String downloadImageUrl = list.get(i);
+                    setFlipperImage(downloadImageUrl);
+                }
+                linearLayout.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                return false;
             }
         });
-
-        for(int i=0; i<gallery_grid_Images.length; i++){
-            // This will create dynamic image views and add them to the ViewFlipper.
-            setFlipperImage(gallery_grid_Images[i]);
-        }
 
         reference= FirebaseDatabase.getInstance().getReference().child("Category");
         reference.keepSynced(true);
@@ -72,15 +81,20 @@ public class HomeFragment extends Fragment {
         list_view.setLayoutManager(gridLayoutManager);
         return view;
     }
-    private void setFlipperImage(int res) {
+    private void setFlipperImage(String res) {
         ImageView image = new ImageView(getContext());
-        image.setBackgroundResource(res);
+        Glide.with(getContext()).load(res).into(image);
+
         viewFlipper.addView(image);
+
         viewFlipper.setFlipInterval(2500);
         viewFlipper.setAutoStart(true);
+
+        viewFlipper.startFlipping();
         viewFlipper.setInAnimation(getContext(),R.anim.slide_in_left);
         viewFlipper.setOutAnimation(getContext(),R.anim.slide_out_right);
     }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -91,8 +105,10 @@ public class HomeFragment extends Fragment {
                 categoryViewHolder.setTitle(category.getTitle());
                 categoryViewHolder.setImage(category.getImage());
                 categoryViewHolder.setDescription(category.getDescription());
+
             }
         };
+
         list_view.setAdapter(firebaseRecyclerAdapter);
     }
 
@@ -121,14 +137,13 @@ public class HomeFragment extends Fragment {
 
         public void setImage(String image) {
             ImageView imageView = mView.findViewById(R.id.ivCategory);
-            Picasso.get().load(image).fit().into(imageView);
+            Glide.with(mView.getContext()).load(image).into(imageView);
         }
 
         public void setTitle(String title) {
             tv=title;
             TextView Title = mView.findViewById(R.id.tvCategory);
             Title.setText(title);
-            Title.setAllCaps(true);
         }
         public void setDescription (String description) {
             TextView Title = mView.findViewById(R.id.tvDescription);

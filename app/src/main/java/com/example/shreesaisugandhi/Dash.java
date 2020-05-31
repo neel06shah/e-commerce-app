@@ -24,6 +24,7 @@ import com.example.shreesaisugandhi.ui.cart.CartFragment;
 import com.example.shreesaisugandhi.ui.home.HomeFragment;
 import com.example.shreesaisugandhi.ui.orders.OrderFragment;
 import com.example.shreesaisugandhi.ui.profile.ProfileFragment;
+import com.example.shreesaisugandhi.ui.search.SearchFragment;
 import com.example.shreesaisugandhi.ui.wish.WishList;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -93,13 +94,23 @@ public class Dash extends AppCompatActivity implements NavigationView.OnNavigati
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.dash, menu);
 
-        MenuItem menuItem;
+        MenuItem menuItem,search;
         menuItem = menu.findItem(R.id.action_cart);
         menuItem.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,
-                        new CartFragment()).commit();
+                        new CartFragment()).addToBackStack(null).commit();
+                return false;
+            }
+        });
+
+        search = menu.findItem(R.id.action_search);
+        search.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,
+                        new SearchFragment()).addToBackStack(null).commit();
                 return false;
             }
         });
@@ -123,11 +134,11 @@ public class Dash extends AppCompatActivity implements NavigationView.OnNavigati
                 break;
             case R.id.nav_orders:
                 getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,
-                        new OrderFragment()).commit();
+                        new OrderFragment()).addToBackStack(null).commit();
                 break;
             case R.id.nav_profile:
                 getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,
-                        new ProfileFragment()).commit();
+                        new ProfileFragment()).addToBackStack(null).commit();
                 break;
             case R.id.nav_setting:
                 Intent k = new Intent(Dash.this, MainActivity.class);
@@ -163,11 +174,11 @@ public class Dash extends AppCompatActivity implements NavigationView.OnNavigati
 
             case  R.id.nav_cart :
                 getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,
-                        new CartFragment()).commit();
+                        new CartFragment()).addToBackStack(null).commit();
                 break;
             case R.id.nav_wish :
                 getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,
-                        new WishList()).commit();
+                        new WishList()).addToBackStack(null).commit();
                 break;
 
             case R.id.nav_help :
@@ -175,11 +186,19 @@ public class Dash extends AppCompatActivity implements NavigationView.OnNavigati
                 i.setData(Uri.parse("https://docs.google.com/forms/d/e/1FAIpQLScTT_Q3yhoNr4UFYCJ3SL7VzdG50nF_hoDC4WvOme-YIoqTkw/viewform?usp=sf"));
                 startActivity(i);
 
-
+            case R.id.nav_about :
+                Intent link = new Intent(Intent.ACTION_VIEW);
+                link.setData(Uri.parse("https://k-p-software-developers.business.site"));
+                startActivity(link);
         }
 
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }
     /*DrawerLayout drawer;

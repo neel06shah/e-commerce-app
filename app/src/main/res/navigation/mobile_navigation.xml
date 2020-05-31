@@ -46,9 +46,27 @@
 
 
     <fragment
+        android:id="@+id/nav_order_detail"
+        android:name="com.example.shreesaisugandhi.orderList"
+        android:label="Order Details"
+        tools:layout="@layout/fragment_order_list" />
+
+    <fragment
         android:id="@+id/nav_wishList"
         android:name="com.example.shreesaisugandhi.ui.wish.WishList"
         android:label="My Wish List"
         tools:layout="@layout/fragment_wish_list" />
+
+    <fragment
+        android:id="@+id/nav_search"
+        android:name="com.example.shreesaisugandhi.ui.search.SearchFragment"
+        android:label="Search"
+        tools:layout="@layout/fragment_search" />
+
+    <fragment
+        android:id="@+id/nav_photo"
+        android:name="com.example.shreesaisugandhi.ui.photo.photoFragment"
+        android:label="Photo"
+        tools:layout="@layout/fragment_photo" />
 
 </navigation>

@@ -7,11 +7,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shreesaisugandhi.R;
+import com.example.shreesaisugandhi.orderList;
 import com.example.shreesaisugandhi.orders;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -64,6 +66,7 @@ public class OrderFragment extends Fragment {
     public static class ordersViewHolder extends RecyclerView.ViewHolder {
 
         View mView;
+        String ID,Total;
 
         public ordersViewHolder(final View itemView) {
             super(itemView);
@@ -71,11 +74,20 @@ public class OrderFragment extends Fragment {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                    Fragment myFragment = new orderList();
 
+                    Bundle arguments = new Bundle();
+                    arguments.putString("id",ID );
+                    arguments.putString("total", Total);
+
+                    myFragment.setArguments(arguments);
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, myFragment).addToBackStack(null).commit();
                 }
             });
         }
         public void setId(String id) {
+            ID = id;
             TextView Id = mView.findViewById(R.id.orderID);
             Id.setText(id);
         }
@@ -86,6 +98,7 @@ public class OrderFragment extends Fragment {
         }
 
         public void setTotal(String total) {
+            Total = total;
             TextView Id = mView.findViewById(R.id.orderAmount);
             Id.setText("Total amount : \u20b9"+total);
         }

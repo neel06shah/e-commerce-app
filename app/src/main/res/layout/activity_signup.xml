@@ -25,7 +25,6 @@
                 android:id="@+id/appname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/logo"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="70dp"
@@ -42,7 +41,7 @@
             <EditText
                 android:id="@+id/name"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:hint="Enter Name"
                 android:layout_marginTop="20dp"
                 android:drawableLeft="@drawable/ic_account_circle_black_24dp"
@@ -68,7 +67,7 @@
             <EditText
                 android:id="@+id/number"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:drawableLeft="@drawable/ic_call_black_24dp"
                 android:hint="Mobile Number"
@@ -101,7 +100,7 @@
             <EditText
                 android:id="@+id/tvOTP"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
                 android:hint="Enter OTP"
                 android:layout_marginTop="20dp"
                 android:textColorHint="#000"
@@ -136,7 +135,8 @@
                 android:id="@+id/loading"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp" />
 
         </LinearLayout>
 

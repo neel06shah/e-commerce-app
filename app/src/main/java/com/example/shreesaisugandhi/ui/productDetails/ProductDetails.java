@@ -1,29 +1,36 @@
 package com.example.shreesaisugandhi.ui.productDetails;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.example.shreesaisugandhi.ConfirmationActivity;
 import com.example.shreesaisugandhi.R;
+import com.example.shreesaisugandhi.SliderItem;
+import com.example.shreesaisugandhi.adapters.SliderAdapterExample;
 import com.example.shreesaisugandhi.cartProduct;
 import com.example.shreesaisugandhi.products;
-import com.example.shreesaisugandhi.ui.cart.CartFragment;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.squareup.picasso.Picasso;
+import com.google.firebase.database.ValueEventListener;
+import com.smarteist.autoimageslider.IndicatorAnimations;
+import com.smarteist.autoimageslider.SliderAnimations;
+import com.smarteist.autoimageslider.SliderView;
+
+import java.util.ArrayList;
 
 public class ProductDetails extends Fragment {
 
@@ -33,12 +40,17 @@ public class ProductDetails extends Fragment {
     Button plus,minus,btnAddCart,btnWish,btnBuyNow;
     EditText total;
     FirebaseAuth firebaseAuth;
-    DatabaseReference databaseReferences;
+    DatabaseReference databaseReferences,photos;
+    ArrayList<SliderItem> sliderItems ;
+
+    SliderView sliderView;
+    private SliderAdapterExample adapter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_prdoduct_details, container, false);
 
+        sliderView = view.findViewById(R.id.imageSlider);
 
         Bundle bundle = this.getArguments();
         if (bundle != null) {
@@ -55,8 +67,33 @@ public class ProductDetails extends Fragment {
         double disc = Double.parseDouble(discount.trim());
         int dis = (int) disc;
 
+        photos = FirebaseDatabase.getInstance().getReference().child("Products").child(title).child("images");
+        photos.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    sliderItems = new ArrayList<>();
+                    for(DataSnapshot child : dataSnapshot.getChildren()){
+                        sliderItems.add(child.getValue(SliderItem.class));
+                    }
+                    adapter = new SliderAdapterExample(sliderItems);
+                    sliderView.setSliderAdapter(adapter);
+
+                    sliderView.setIndicatorAnimation(IndicatorAnimations.WORM); //set indicator animation by using SliderLayout.IndicatorAnimations. :WORM or THIN_WORM or COLOR or DROP or FILL or NONE or SCALE or SCALE_DOWN or SLIDE and SWAP!!
+                    sliderView.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
+                    sliderView.setAutoCycleDirection(SliderView.AUTO_CYCLE_DIRECTION_RIGHT);
+                    sliderView.setIndicatorSelectedColor(Color.parseColor("#4b0082"));
+                    sliderView.setIndicatorUnselectedColor(Color.parseColor("#039be5"));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         tvTile=view.findViewById(R.id.tvTitle);
         tvTile.setText(title);
+        tvTile.setAllCaps(true);
 
         tvMrp=view.findViewById(R.id.tvMrp);
         tvMrp.setText("\u20B9 "+mrp);
@@ -72,9 +109,6 @@ public class ProductDetails extends Fragment {
 
         tvDiscount=view.findViewById(R.id.tvDiscount);
         tvDiscount.setText(dis+"%\noff");
-
-        ImageView imageView = view.findViewById(R.id.imageView2);
-        Picasso.get().load(image).into(imageView);
 
         tvSave = view.findViewById(R.id.tvSave);
         tvSave.setText("Save \u20B9 "+save);
@@ -137,7 +171,7 @@ public class ProductDetails extends Fragment {
                 int finalAmount = r*quan;
 
                 cartProduct products = new cartProduct(title,description,quantity,image,mrp,rate,discount,t);
-                databaseReferences.child("Order").child(id).child("Products").setValue(products);
+                databaseReferences.child("Order").child(id).child("Products").child(title).setValue(products);
                 Intent i = new Intent(getContext(), ConfirmationActivity.class);
                 i.putExtra("id",id);
                 i.putExtra("total",String.valueOf(finalAmount));

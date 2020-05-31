@@ -1,10 +1,9 @@
 package com.example.shreesaisugandhi;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -15,6 +14,9 @@ import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -39,6 +41,7 @@ public class ConfirmationActivity extends AppCompatActivity {
     DatabaseReference databaseReference,from,to,clear;
     RadioGroup rdGroup;
     String payment,name;
+    int t;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,16 +79,23 @@ public class ConfirmationActivity extends AppCompatActivity {
         Intent i = getIntent();
         final String id = i.getStringExtra("id");
         final String total = i.getStringExtra("total");
+        t = Integer.parseInt(total);
+
+        if(t < 499){
+            t=t+50;
+            conTotal.setText("Total amount \u20B9: "+t);
+        }
+        else {
+            conTotal.setText("Total amount : \u20B9"+t);
+        }
 
         conOrder.setText("Order ID : "+id);
         conNumber.setText("Customer no. : "+number);
-        conTotal.setText("Total amount : \u20B9"+total);
 
-        databaseReference.child("Cart").child(number).addValueEventListener(new ValueEventListener() {
+        databaseReference.child("Order").child(id).child("Products").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                final List<String> areas = new ArrayList<String>();
-
+                final List<String> areas = new ArrayList<>();
                 for (DataSnapshot areaSnapshot: dataSnapshot.getChildren()) {
                     String areaName = areaSnapshot.child("name").getValue(String.class);
                     String quantity = areaSnapshot.child("total").getValue(String.class);
@@ -95,9 +105,12 @@ public class ConfirmationActivity extends AppCompatActivity {
                     int r = Integer.parseInt(rate);
                     int amt = q*r;
 
-                    areas.add(areaName+"\n"+"Quantity : ("+quantity+"*"+rate+") = "+amt);
+                    areas.add(areaName+"\n"+"("+quantity+"*"+rate+") = "+amt);
                 }
 
+                if(t < 499) {
+                    areas.add("Delivery charges : \u20b950");
+                }
                 ArrayAdapter<String> areasAdapter = new ArrayAdapter<String>(ConfirmationActivity.this, android.R.layout.simple_list_item_1, areas);
                 conProducts.setAdapter(areasAdapter);
                 setListViewHeightBasedOnChildren(conProducts);
@@ -117,6 +130,12 @@ public class ConfirmationActivity extends AppCompatActivity {
                 }
                 else if (checkedId == R.id.rbUPI) {
                     payment="UPI";
+
+                    AlertDialog.Builder alertadd = new AlertDialog.Builder(ConfirmationActivity.this);
+                    LayoutInflater factory = LayoutInflater.from(ConfirmationActivity.this);
+                    final View view = factory.inflate(R.layout.sample, null);
+                    alertadd.setView(view);
+                    alertadd.show();
                 }
             }
         });
@@ -138,33 +157,14 @@ public class ConfirmationActivity extends AppCompatActivity {
                 to.child("address").setValue(a);
                 to.child("contact").setValue(number);
                 to.child("payment").setValue(payment);
-                to.child("total").setValue(total);
+                to.child("total").setValue(String.valueOf(t));
                 to.child("date").setValue(formattedDate);
                 to.child("state").setValue("Waiting for conformation");
 
-
-                from.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        to.child("Products").setValue(dataSnapshot.getValue(), new DatabaseReference.CompletionListener() {
-                                    @Override
-                                    public void onComplete(DatabaseError firebaseError, DatabaseReference firebase) {
-                                        if (firebaseError != null) {
-                                            Toast.makeText(ConfirmationActivity.this, "Please connect internet", Toast.LENGTH_SHORT).show();
-                                        } else {
-                                            Toast.makeText(ConfirmationActivity.this, "Your Order is submitted.\nPlease wait for conformation", Toast.LENGTH_SHORT).show();
-                                            Intent i = new Intent(ConfirmationActivity.this,Dash.class);
-                                            startActivity(i);
-                                        }
-                                    }
-                                });
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
+                Toast.makeText(ConfirmationActivity.this, "Order added successfully", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(ConfirmationActivity.this, Dash.class);
+                startActivity(i);
+                finish();
             }
         });
 

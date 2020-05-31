@@ -1,9 +1,12 @@
 package com.example.shreesaisugandhi;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -15,13 +18,16 @@ public class Splash extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+        TextView textView = findViewById(R.id.appname);
+        Animation a = AnimationUtils.loadAnimation(this, R.anim.fade_in);
+        a.reset();
+
+        textView.startAnimation(a);
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    //Animation animation= AnimationUtils.loadAnimation(Splash.this,R.anim.fade_in);
-                    //imgView.startAnimation(animation);
-                    Thread.sleep(3000);
+                    Thread.sleep(2000);
                 }
                 catch (InterruptedException e) {
                     e.printStackTrace();

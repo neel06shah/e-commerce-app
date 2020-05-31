@@ -6,7 +6,11 @@
     android:layout_height="match_parent"
     android:background="#e1f5fe">
 
-    <LinearLayout
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -35,12 +39,23 @@
             android:layout_marginRight="20dp">
 
 
-            <ImageView
-                android:id="@+id/imageView2"
+            <com.smarteist.autoimageslider.SliderView
+                android:id="@+id/imageSlider"
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
-                android:layout_centerHorizontal="true"
-                android:src="@drawable/common_google_signin_btn_icon_dark_focused" />
+                android:layout_height="300dp"
+                app:sliderAnimationDuration="600"
+                app:sliderAutoCycleDirection="back_and_forth"
+                app:sliderAutoCycleEnabled="true"
+                app:sliderIndicatorAnimationDuration="600"
+                app:sliderIndicatorGravity="center_horizontal|bottom"
+                app:sliderIndicatorMargin="15dp"
+                app:sliderIndicatorOrientation="horizontal"
+                app:sliderIndicatorPadding="3dp"
+                app:sliderIndicatorRadius="2dp"
+                app:sliderIndicatorSelectedColor="#5A5A5A"
+                app:sliderIndicatorUnselectedColor="#FFF"
+                app:sliderScrollTimeInSec="1"
+                app:sliderStartAutoCycle="true" />
 
             <TextView
                 android:id="@+id/tvDiscount"
@@ -128,7 +143,7 @@
             android:layout_height="wrap_content"
             android:textColor="#2f6699"
             android:textSize="18sp"
-            android:text="Free Delivery available for Dombivali" />
+            android:text="FREE dielivery over \u20b9 499" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -269,4 +284,5 @@
                 android:textSize="20sp"
                 android:text="TextView"/>
         </LinearLayout>
+    </RelativeLayout>
 </ScrollView>

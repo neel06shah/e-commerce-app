@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.shreesaisugandhi.ConfirmationActivity;
 import com.example.shreesaisugandhi.R;
 import com.example.shreesaisugandhi.cartProduct;
@@ -30,7 +31,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
 import static androidx.constraintlayout.widget.Constraints.TAG;
 
@@ -50,7 +50,7 @@ public class CartFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_cart, container, false);
 
         firebaseAuth=FirebaseAuth.getInstance();
-        String current = firebaseAuth.getCurrentUser().getPhoneNumber();
+        final String current = firebaseAuth.getCurrentUser().getPhoneNumber();
         tvTotal=view.findViewById(R.id.tvTotal);
 
         reference= FirebaseDatabase.getInstance().getReference().child("Cart").child(current);
@@ -65,10 +65,32 @@ public class CartFragment extends Fragment {
         buyNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getContext(), ConfirmationActivity.class);
-                i.putExtra("id",id);
-                i.putExtra("total",String.valueOf(finalAmount));
-                startActivity(i);
+
+                from=FirebaseDatabase.getInstance().getReference().child("Cart").child(current);
+                to=FirebaseDatabase.getInstance().getReference().child("Order").child(id);
+                from.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        to.child("Products").setValue(dataSnapshot.getValue(), new DatabaseReference.CompletionListener() {
+                            @Override
+                            public void onComplete(DatabaseError firebaseError, DatabaseReference firebase) {
+                                if (firebaseError != null) {
+                                    Toast.makeText(getContext(), "Please connect internet", Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Intent i = new Intent(getContext(), ConfirmationActivity.class);
+                                    i.putExtra("id",id);
+                                    i.putExtra("total",String.valueOf(finalAmount));
+                                    startActivity(i);
+                                }
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
             }
         });
 
@@ -186,7 +208,7 @@ public class CartFragment extends Fragment {
         public void setImage(String image) {
             Image=image;
             ImageView imageView = mView.findViewById(R.id.imageView);
-            Picasso.get().load(image).into(imageView);
+            Glide.with(mView.getContext()).load(image).into(imageView);
         }
 
         public void setName(String name) {

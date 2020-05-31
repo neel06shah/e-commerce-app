@@ -1,7 +1,7 @@
 package com.example.shreesaisugandhi;
 
 public class products {
-    public String name, description, quantity, image, mrp, rate, discount;
+    public String name, description, quantity, image, mrp, rate, discount,category;
 
     public products(){}
 
@@ -13,6 +13,14 @@ public class products {
         this.mrp = mrp;
         this.rate = rate;
         this.discount = discount;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getCategory() {
+        return category;
     }
 
     public String getName() {

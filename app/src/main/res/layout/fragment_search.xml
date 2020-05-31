@@ -8,10 +8,11 @@
 
     <androidx.appcompat.widget.SearchView
             android:id="@+id/searchView"
+            android:focusable="true"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:padding="10dp"
-            app:queryHint="Search"/>
+            app:queryHint="Search" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listView"

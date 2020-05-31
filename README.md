@@ -8,3 +8,7 @@ This app is using firebase database as its backend.  This app is mainly used to 
 4. Quick options to directly call/whatsapp the shop owner.
 5. Personalized image slider for banners and offers.
 6. Product information display includes their name, mrp, rate, discount, description, packaging.
+
+## Develeped By
+* Auther : Neel Shah
+* Email  : neel06shah@gmail.com

@@ -1,2 +1,10 @@
 # Shree Sai Sugandhi
 This app is using firebase database as its backend.  This app is mainly used to develop small businesses.  This app is developed for a small firm named 'SHREE SAI SUGANDHI'. They have used this app to sell their products using a online method .It includes products list according to their personalized categories.
+
+# Features
+1. Login using Phone number authentificaton
+2. Personalized categories to add products
+3. Functions like - Cart, WishList, Personal info. for the user.
+4. Quick options to directly call/whatsapp the shop owner.
+5. Personalized image slider for banners and offers.
+6. Product information display includes their name, mrp, rate, discount, description, packaging.

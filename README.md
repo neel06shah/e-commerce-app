@@ -10,5 +10,6 @@ This app is using firebase database as its backend. This app is mainly used to d
 6. Product information display includes their name, mrp, rate, discount, description, packaging.
 
 ## Develeped By
-* Auther : Neel Shah
-* Email  : neel06shah@gmail.com
+* Auther   : Neel Shah
+* Email    : neel06shah@gmail.com
+* LinkedIn : https://www.linkedin.com/in/neel-shah-a51935183
